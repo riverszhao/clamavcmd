@@ -35,16 +35,16 @@ timeout /t 30
 goto end
 
 :status
-echo clamd服务状态%tab%%clamdstatus%
+echo clamd service status %tab%%clamdstatus%
 timeout /t 30
 goto end
 
 :install
 if "%clamdstatus%" == "UNINSTALL" (
-	echo 开始安装服务...
+	echo starting install service...
 	runas /savecred /user:administrator "%clampath%\clamd.exe --install-service"
 ) else (
-	echo 服务已存在.
+	echo service already exist.
 )
 timeout /t 5
 goto end
@@ -52,10 +52,10 @@ goto end
 :uninstall
 if not "%clamdstatus%" == "UNINSTALL" (
 	call :stop
-	echo 开始卸载服务...
+	echo starting uninstall service...
 	runas /savecred /user:administrator "%clampath%\clamd.exe --uninstall-service"
 ) else (
-	echo clamd服务不存在,无需卸载.
+	echo clamd service not exist, you not need uninstall.
 )
 
 timeout /t 5
@@ -63,7 +63,7 @@ goto end
 
 :update
 pushd %clampath%
-echo 开始更新病毒库 ... &&  %clampath%\freshclam.exe && echo 更新完成.
+echo starting update virus database ... &&  %clampath%\freshclam.exe && echo update done.
 popd
 pause
 goto end
@@ -73,7 +73,7 @@ if "%clamdstatus%" == "UNINSTALL" (
 	call :install
 )
 if not "%clamdstatus%" == "RUNNING" (
-	echo 开始启动服务...
+	echo starting service...
 	runas /savecred /user:administrator "net start clamd"
 	%clampath%\clamdscan --ping 900
 )
@@ -81,10 +81,10 @@ goto end
 
 :stop
 if "%clamdstatus%" == "RUNNING" (
-	echo 开始停止服务...
+	echo stopping service...
 	runas /savecred /user:administrator "net stop clamd"
 ) else (
-	echo 服务未运行, 当前状态是: %clamdstatus% .
+	echo service not running, current status is: %clamdstatus% .
 )
 goto end
 
@@ -113,12 +113,12 @@ goto end
 if not "%clamdstatus%" == "RUNNING" (
 	call :start
 )
-echo 开始扫描 [%*] ...
+echo starting virus scan [%*] ...
 echo ---- ----
 :: %clampath%\clamdscan.exe --multiscan --fdpass --move=%clamhome%\virus_isolation --log=%clamhome%\log\clamdscan.log %*
 %clampath%\clamdscan.exe --multiscan --fdpass --log=%clamhome%\log\clamdscan.log %*
 echo ---- ----
-echo 扫描完成.
+echo scan virus done.
 echo  
 pause
 goto end
