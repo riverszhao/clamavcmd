@@ -35,16 +35,16 @@ timeout /t 30
 goto end
 
 :status
-echo clamd·şÎñ×´Ì¬%tab%%clamdstatus%
+echo clamdæœåŠ¡çŠ¶æ€%tab%%clamdstatus%
 timeout /t 30
 goto end
 
 :install
 if "%clamdstatus%" == "UNINSTALL" (
-	echo ¿ªÊ¼°²×°·şÎñ...
+	echo å¼€å§‹å®‰è£…æœåŠ¡...
 	runas /savecred /user:administrator "%clampath%\clamd.exe --install-service"
 ) else (
-	echo ·şÎñÒÑ´æÔÚ.
+	echo æœåŠ¡å·²å­˜åœ¨.
 )
 timeout /t 5
 goto end
@@ -52,10 +52,10 @@ goto end
 :uninstall
 if not "%clamdstatus%" == "UNINSTALL" (
 	call :stop
-	echo ¿ªÊ¼Ğ¶ÔØ·şÎñ...
+	echo å¼€å§‹å¸è½½æœåŠ¡...
 	runas /savecred /user:administrator "%clampath%\clamd.exe --uninstall-service"
 ) else (
-	echo clamd·şÎñ²»´æÔÚ,ÎŞĞèĞ¶ÔØ.
+	echo clamdæœåŠ¡ä¸å­˜åœ¨,æ— éœ€å¸è½½.
 )
 
 timeout /t 5
@@ -63,7 +63,7 @@ goto end
 
 :update
 pushd %clampath%
-echo ¿ªÊ¼¸üĞÂ²¡¶¾¿â ... &&  %clampath%\freshclam.exe && echo ¸üĞÂÍê³É.
+echo å¼€å§‹æ›´æ–°ç—…æ¯’åº“ ... &&  %clampath%\freshclam.exe && echo æ›´æ–°å®Œæˆ.
 popd
 pause
 goto end
@@ -73,7 +73,7 @@ if "%clamdstatus%" == "UNINSTALL" (
 	call :install
 )
 if not "%clamdstatus%" == "RUNNING" (
-	echo ¿ªÊ¼Æô¶¯·şÎñ...
+	echo å¼€å§‹å¯åŠ¨æœåŠ¡...
 	runas /savecred /user:administrator "net start clamd"
 	%clampath%\clamdscan --ping 900
 )
@@ -81,10 +81,10 @@ goto end
 
 :stop
 if "%clamdstatus%" == "RUNNING" (
-	echo ¿ªÊ¼Í£Ö¹·şÎñ...
+	echo å¼€å§‹åœæ­¢æœåŠ¡...
 	runas /savecred /user:administrator "net stop clamd"
 ) else (
-	echo ·şÎñÎ´ÔËĞĞ, µ±Ç°×´Ì¬ÊÇ: %clamdstatus% .
+	echo æœåŠ¡æœªè¿è¡Œ, å½“å‰çŠ¶æ€æ˜¯: %clamdstatus% .
 )
 goto end
 
@@ -113,12 +113,12 @@ goto end
 if not "%clamdstatus%" == "RUNNING" (
 	call :start
 )
-echo ¿ªÊ¼É¨Ãè [%*] ...
+echo å¼€å§‹æ‰«æ [%*] ...
 echo ---- ----
 :: %clampath%\clamdscan.exe --multiscan --fdpass --move=%clamhome%\virus_isolation --log=%clamhome%\log\clamdscan.log %*
 %clampath%\clamdscan.exe --multiscan --fdpass --log=%clamhome%\log\clamdscan.log %*
 echo ---- ----
-echo É¨ÃèÍê³É.
+echo æ‰«æå®Œæˆ.
 echo  
 pause
 goto end
