@@ -13,8 +13,10 @@ ClamAV is a free anti-virus software, but it offical not provide GUI for manage 
    set clamhome=%~dp0
    set clampath=%clamhome%\clamav-1.0.1.win.x64   <--------- change to your clamav install path
    "
+4. first running
+   install / uninstall , start/stop service need administrator permission, so I use "administrator" user for it, if you first run, it will prompt you input administrator password for cmd.exe's "runas" command call.
 5. get help
-    use clamav.bat help get all support command
+    use "clamav.bat help" get all support command, and yes you can read .bat file directly if you learned cmd.exe batch file.
 6. integrate to GUI explorer.
    make clamav.bat shortcut to %appdata%\Microsoft\Windows\SendTo, now select you want to scan file(s) or directory(s) and right click,pop up context menu, send to sub-menu, clamav.bat shortcut, now it's will call clamav to scan virus now.
    
