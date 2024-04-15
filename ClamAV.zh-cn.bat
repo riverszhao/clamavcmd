@@ -75,7 +75,7 @@ if "%clamdstatus%" == "UNINSTALL" (
 if not "%clamdstatus%" == "RUNNING" (
 	echo 开始启动服务...
 	runas /savecred /user:administrator "net start clamd"
-	%clampath%\clamdscan --ping 900
+	%clampath%\clamdscan --ping 900 2>NUL > NUL
 )
 goto end
 
